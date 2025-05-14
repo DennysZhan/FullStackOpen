@@ -1,3 +1,4 @@
+//Creating Components
 const Header = ({course}) => {
   return(
   <div>
