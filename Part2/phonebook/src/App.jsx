@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react'
+import './index.css'
 import Filter from './components/Filter'
 import Info from './components/Info'
 import DisplayPhonebook from './components/DisplayPhonebook'
 import personService from './services/persons'
+import Notification from './components/Notification'
+import ErrorMessage from './components/ErrorMessage'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filtered, setNewFilter] = useState('')
+  const [message, setMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -33,11 +38,16 @@ const App = () => {
         personService
           .updateNumber(ifNameExists.id, changedPerson)
           .then(response => {
-            setPersons(persons.map(person => person.id !== ifNameExists.id ? person : response.data))}
-            )
+            setPersons(persons.map(person => person.id !== ifNameExists.id ? person : response.data))
             setNewName('')
             setNewNumber('')
-
+            setMessage(`Changed the phone number of ${ifNameExists.name}`)
+            setTimeout(() => {setMessage(null)}, 5000)
+          })
+          .catch(error => {
+            setErrorMessage(`Information of ${ifNameExists.name} was already removed from server`)
+            setTimeout(() => {setErrorMessage(null)}, 5000)
+          })
       }
     }
     else{
@@ -47,6 +57,8 @@ const App = () => {
           setPersons([...persons, response.data])
           setNewName('')
           setNewNumber('')
+          setMessage(`Added ${personObject.name}`)
+          setTimeout(() => {setMessage(null)}, 5000)
         })
     }
   }
@@ -80,6 +92,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <ErrorMessage message = {errorMessage} />
+      <Notification message = {message} />
       <Filter filtered = {filtered} handleNewFilter = {handleNewFilter}/>
       <h2>Add a New</h2>
       <Info addInfo = {addInfo} newName = {newName} handleNewName = {handleNewName} newNumber = {newNumber} handleNewNumber = {handleNewNumber}/>
