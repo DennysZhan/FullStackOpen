@@ -1,4 +1,6 @@
-const DisplayPhonebook = ({filtered, persons}) => {
+import DeleteButton from "./deleteButton";
+
+const DisplayPhonebook = ({filtered, persons, command}) => {
 
   const filteredList = (filtered) => {
     if (filtered === ''){
@@ -12,9 +14,12 @@ const DisplayPhonebook = ({filtered, persons}) => {
 
     return(
         <div>
-            {filteredList(filtered).map((person, index) => (
-            <div key = {index}>{person.name}: {person.number}</div>
-        ))}
+            {filteredList(filtered).map((person) => (
+            <div key={person.id}>
+              {person.name}: {person.number}
+              <DeleteButton person = {person} command = {command}/>
+            </div>
+            ))}
         </div>
     )
 }

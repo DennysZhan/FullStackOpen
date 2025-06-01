@@ -1,24 +1,54 @@
 {
-  "persons":[
-    { 
-      "name": "Arto Hellas", 
+  "persons": [
+    {
+      "name": "Arto Hellas",
       "number": "040-123456",
       "id": "1"
     },
-    { 
-      "name": "Ada Lovelace", 
+    {
+      "name": "Ada Lovelace",
       "number": "39-44-5323523",
       "id": "2"
     },
-    { 
-      "name": "Dan Abramov", 
+    {
+      "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": "3"
     },
-    { 
-      "name": "Mary Poppendieck", 
+    {
+      "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": "4"
+    },
+    {
+      "id": "5",
+      "name": "Steve Jobs",
+      "number": "537-864-1237"
+    },
+    {
+      "id": "7",
+      "name": "Kenny Smith",
+      "number": "669-483-4581"
+    },
+    {
+      "id": "9",
+      "name": "LeBron James",
+      "number": "846-254-2356"
+    },
+    {
+      "id": "10",
+      "name": "Charles Barkley",
+      "number": "846-273-8365"
+    },
+    {
+      "id": "12",
+      "name": "Coop Collection",
+      "number": "732-738-8238"
+    },
+    {
+      "id": "6",
+      "name": "Bill Gates",
+      "number": "888-888-8888"
     }
   ]
 }
