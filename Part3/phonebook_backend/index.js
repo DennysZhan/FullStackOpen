@@ -1,4 +1,5 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 
 let persons = [
@@ -23,16 +24,21 @@ let persons = [
       "number": "39-23-6423122"
     }
 ]
-const currentTime = new Date()
-const timeString = currentTime.toString()
 
 app.use(express.json())
+
+morgan.token('body', function (req, res) { return JSON.stringify(req.body)})
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 app.get('/', (request, response) => {
     response.send('<h1>Hello World!</h1>')
 })
 
 app.get('/info', (request, response) => {
+
+    const currentTime = new Date()
+    const timeString = currentTime.toString()
     response.send(`<p> Phone book has info for ${persons.length} people <p/><p>${timeString}<p/>`)
 })
 
