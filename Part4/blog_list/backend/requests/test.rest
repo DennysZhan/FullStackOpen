@@ -1,0 +1,13 @@
+
+GET http://localhost:3003/api/blogs
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "How to use the VS Code REST Client",
+  "author": "Jane Doe",
+  "url": "https://example.com/rest-client-guide",
+  "likes": 10
+}
+
