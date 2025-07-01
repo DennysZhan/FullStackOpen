@@ -91,6 +91,38 @@ test('creating a blog post without title and url returns 400', async () => {
     .expect(400)
 })
 
+test('deleting a blog post', async () => {
+  const response = await api.get('/api/blogs')
+  const blogToDelete = response.body[0].id
+
+  await api
+    .delete(`/api/blogs/${blogToDelete}`)
+    .expect(204)
+})
+
+test('updating a blog post', async () => {
+  const response = await api.get('/api/blogs')
+  const blogToUpdate = response.body[0].id
+
+
+  const updatedBlog = {
+    title: "Updated Title",
+    author: "Updated Author",
+    url: "https://updated.com",
+    likes: 10
+  }
+
+  const putResponse = await api
+    .put(`/api/blogs/${blogToUpdate}`)
+    .send(updatedBlog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+  assert.strictEqual(putResponse.body.title, updatedBlog.title)
+  assert.strictEqual(putResponse.body.author, updatedBlog.author)
+  assert.strictEqual(putResponse.body.url, updatedBlog.url)
+  assert.strictEqual(putResponse.body.likes, updatedBlog.likes)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })

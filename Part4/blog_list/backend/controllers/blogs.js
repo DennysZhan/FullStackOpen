@@ -27,4 +27,39 @@ blogsRouter.post('/', async (request, response) => {
   }
 })
 
+blogsRouter.delete('/:id', async(request, response) => {
+  const id = request.params.id
+  try {
+    const result = await Blog.findByIdAndDelete(id)
+    if (result) {
+      response.status(204).end()
+    } else {
+      response.status(404).json({ error: 'Blog not found' })
+    }
+  } catch (error) {
+    response.status(500).json({ error: 'Something went wrong' })
+  }
+})
+
+blogsRouter.put('/:id', async (request, response) => {
+  const id = request.params.id
+  const body = request.body
+  const blog = {
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes
+  }
+  try {
+    const updatedBlog = await Blog.findByIdAndUpdate(id, blog, { new: true })
+    if (updatedBlog) {
+      response.json(updatedBlog)
+    } else {
+      response.status(404).json({ error: 'Blog not found' })
+    }
+  } catch (error) {
+    response.status(500).json({ error: 'Something went wrong' })
+  }
+})
+
 module.exports = blogsRouter
